@@ -26,7 +26,7 @@ const authOptions: NextAuthOptions = {
         });
 
         if (!user) {
-          return null;
+          throw new Error('Email maybe wrong');
         }
 
         const isMatch = await comparePassword(
@@ -34,13 +34,17 @@ const authOptions: NextAuthOptions = {
           user.password
         );
 
-        const isAdmin = user.role === 'admin';
-
-        if (isMatch && isAdmin) {
-          return user;
+        if (!isMatch) {
+          throw new Error('Password maybe wrong');
         }
 
-        return null;
+        const isAdmin = user.role === 'admin';
+
+        if (!isAdmin) {
+          throw new Error('You are not admin');
+        }
+
+        return user;
       },
     }),
   ],

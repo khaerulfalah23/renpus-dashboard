@@ -9,43 +9,24 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useSignIn } from '@/features/auth/useSignIn';
 import { useForm } from 'react-hook-form';
-import { signInFormSchema } from '@/lib/form-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
-import { toast } from 'sonner';
+import { SignInCredential, TSignInCredential } from '@/lib/form-schema';
+import { Loader2 } from 'lucide-react';
 
 export default function SignInForm() {
-  const router = useRouter();
-  const form = useForm<z.infer<typeof signInFormSchema>>({
-    resolver: zodResolver(signInFormSchema),
+  const form = useForm<TSignInCredential>({
+    resolver: zodResolver(SignInCredential),
     defaultValues: {
       email: '',
       password: '',
     },
   });
-
-  const { isSubmitting } = form.formState;
-
-  const onSubmit = async (val: z.infer<typeof signInFormSchema>) => {
-    try {
-      const authenticated = await signIn('credentials', {
-        ...val,
-        redirect: false,
-      });
-      if (authenticated?.error) {
-        toast.error('Email or Password maybe wrong');
-        return;
-      }
-      router.push('/');
-      toast.success('Login Success');
-    } catch (error) {
-      toast.error('Something went wrong');
-    }
+  const { mutate, isPending } = useSignIn();
+  const onSubmit = (val: TSignInCredential) => {
+    mutate(val);
   };
-
   return (
     <>
       <Form {...form}>
@@ -63,7 +44,7 @@ export default function SignInForm() {
                   <Input
                     type='email'
                     placeholder='Enter your email...'
-                    disabled={isSubmitting}
+                    disabled={isPending}
                     {...field}
                   />
                 </FormControl>
@@ -81,7 +62,7 @@ export default function SignInForm() {
                   <Input
                     type='password'
                     placeholder='Enter your password...'
-                    disabled={isSubmitting}
+                    disabled={isPending}
                     {...field}
                   />
                 </FormControl>
@@ -89,11 +70,8 @@ export default function SignInForm() {
               </FormItem>
             )}
           />
-          <Button
-            disabled={isSubmitting}
-            className='ml-auto w-full'
-            type='submit'
-          >
+          <Button disabled={isPending} className='ml-auto w-full' type='submit'>
+            {isPending && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
             Sign In
           </Button>
         </form>
