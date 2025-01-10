@@ -10,35 +10,42 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
+import { signInFormSchema } from '@/lib/form-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-
-const schema = z.object({
-  email: z
-    .string()
-    .email('Invalid email address')
-    .nonempty('Email is required'),
-  password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters')
-    .max(32, 'Password must not exceed 32 characters')
-    .nonempty('Password is required'),
-});
-
-type FormData = z.infer<typeof schema>;
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { toast } from 'sonner';
 
 export default function SignInForm() {
-  const form = useForm<FormData>({
-    resolver: zodResolver(schema),
+  const router = useRouter();
+  const form = useForm<z.infer<typeof signInFormSchema>>({
+    resolver: zodResolver(signInFormSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  async function onSubmit(values: FormData) {
-    console.log(values);
-  }
+  const { isSubmitting } = form.formState;
+
+  const onSubmit = async (val: z.infer<typeof signInFormSchema>) => {
+    try {
+      const authenticated = await signIn('credentials', {
+        ...val,
+        redirect: false,
+      });
+      if (authenticated?.error) {
+        toast.error('Email or Password maybe wrong');
+        return;
+      }
+      router.push('/');
+      toast.success('Login Success');
+    } catch (error) {
+      toast.error('Something went wrong');
+    }
+  };
+
   return (
     <>
       <Form {...form}>
@@ -56,7 +63,7 @@ export default function SignInForm() {
                   <Input
                     type='email'
                     placeholder='Enter your email...'
-                    // disabled={loading}
+                    disabled={isSubmitting}
                     {...field}
                   />
                 </FormControl>
@@ -74,7 +81,7 @@ export default function SignInForm() {
                   <Input
                     type='password'
                     placeholder='Enter your password...'
-                    // disabled={loading}
+                    disabled={isSubmitting}
                     {...field}
                   />
                 </FormControl>
@@ -83,7 +90,7 @@ export default function SignInForm() {
             )}
           />
           <Button
-            // disabled={loading}
+            disabled={isSubmitting}
             className='ml-auto w-full'
             type='submit'
           >
