@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  address   String?
+  email     String   @unique
+  password  String
+  image     String?  @default("default.svg")
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bookingId String?
+  Booking   Booking? @relation(fields: [bookingId], references: [id])
+  borrowId  String?
+  Borrow    Borrow?  @relation(fields: [borrowId], references: [id])
+}
+
+model Category {
+  id       String @id @default(cuid())
+  category String @unique
+  Book     Book[]
+}
+
+model Book {
+  id              String   @id @default(cuid())
+  image           String
+  title           String
+  description     String
+  author          String
+  publisher       String
+  publicationYear String
+  isbn            String
+  stock           Int
+  booked          Int?     @default(0)
+  borrowed        Int?     @default(0)
+  categoryId      String
+  Category        Category @relation(fields: [categoryId], references: [id])
+  bookingId       String?
+  Booking         Booking? @relation(fields: [bookingId], references: [id])
+  borrowId        String?
+  Borrow          Borrow?  @relation(fields: [borrowId], references: [id])
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  date_booked DateTime @default(now())
+  expired     DateTime
+  user        User[]
+  books       Book[]
+  Borrow      Borrow?
+}
+
+model Borrow {
+  id             String   @id @default(cuid())
+  borrow_date    DateTime @default(now())
+  return_date    DateTime
+  date_of_return DateTime
+  status         String
+  fine           Int      @default(0)
+  user           User[]
+  books          Book[]
+  bookingId      String?  @unique
+  booking        Booking? @relation(fields: [bookingId], references: [id])
+}
