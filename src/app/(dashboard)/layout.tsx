@@ -2,6 +2,10 @@ import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import authOptions from '../api/auth/[...nextauth]/options';
 import { redirect } from 'next/navigation';
+import { SidebarInset, SidebarProvider } from '@/components/common/sidebar';
+import { cookies } from 'next/headers';
+import AppSidebar from '@/components/common/app-sidebar';
+import Header from '@/components/common/header';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,5 +21,15 @@ export default async function RootLayout({
   if (session === null) {
     return redirect('/signin');
   }
-  return <main>{children}</main>;
+  const cookieStore = await cookies();
+  const defaultOpen = cookieStore.get('sidebar:state')?.value === 'true';
+  return (
+    <SidebarProvider defaultOpen={defaultOpen}>
+      <AppSidebar />
+      <SidebarInset>
+        <Header />
+        {children}
+      </SidebarInset>
+    </SidebarProvider>
+  );
 }
