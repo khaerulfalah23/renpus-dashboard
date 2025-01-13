@@ -45,7 +45,7 @@ import { Icons } from '../icons';
 
 export const company = {
   name: 'Renpus',
-  logo: Book,
+  logo: Icons.logo,
   plan: 'dashboard',
 };
 
@@ -57,8 +57,8 @@ export default function AppSidebar() {
     <Sidebar collapsible='icon'>
       <SidebarHeader>
         <div className='flex gap-2 py-2 text-sidebar-accent-foreground '>
-          <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
-            <company.logo className='size-4' />
+          <div className='flex aspect-square size-8 items-center justify-center rounded-lg '>
+            <company.logo className='size-10' />
           </div>
           <div className='grid flex-1 text-left text-sm leading-tight'>
             <span className='truncate font-semibold'>{company.name}</span>

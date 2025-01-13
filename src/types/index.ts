@@ -33,3 +33,14 @@ export interface FooterItem {
 export type MainNavItem = NavItemWithOptionalChildren;
 
 export type SidebarNavItem = NavItemWithChildren;
+
+export default interface BaseResponse {
+  success: boolean;
+  data: any;
+  message: string;
+}
+
+export type categoryItem = {
+  id: string;
+  category: string;
+};
