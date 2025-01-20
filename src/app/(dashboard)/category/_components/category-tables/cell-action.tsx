@@ -25,6 +25,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const { mutate, isPending } = useDeleteCategory();
   const onConfirm = () => {
     mutate(data.id);
+    setOpen(false);
   };
 
   return (
