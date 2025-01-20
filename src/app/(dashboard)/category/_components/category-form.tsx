@@ -67,11 +67,10 @@ export default function CategoryForm({
               />
             </div>
             <Button disabled={isPendingCreate || isPendingUpdate} type='submit'>
-              {isPendingCreate ||
-                (isPendingUpdate && (
-                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                ))}
-              Add Category
+              {isPendingCreate || isPendingUpdate ? (
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+              ) : null}
+              {initialData ? 'Update Category' : 'Add Category'}
             </Button>
           </form>
         </Form>
