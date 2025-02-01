@@ -37,7 +37,7 @@ export default async function Book(props: pageProps) {
           </Link>
         </div>
         <Separator />
-        <BookTableAction />
+        {/* <BookTableAction /> */}
         <Suspense
           key={key}
           fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}

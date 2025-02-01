@@ -8,12 +8,12 @@ import { useFetchCategories } from '@/features/category/useFetchCategories';
 import { categoryItem } from '@/types';
 
 export default function BookTableAction() {
-  const { data: res, isPending } = useFetchCategories();
-  const CATEGORY_OPTIONS =
-    (res?.data?.data as categoryItem[])?.map((categories: categoryItem) => ({
-      value: categories.category,
-      label: categories.category,
-    })) || [];
+  // const { data: res, isPending } = useFetchCategories();
+  // const CATEGORY_OPTIONS =
+  //   (res?.data?.data as categoryItem[])?.map((categories: categoryItem) => ({
+  //     value: categories.category,
+  //     label: categories.category,
+  //   })) || [];
   const {
     // categoriesFilter,
     // setCategoriesFilter,
