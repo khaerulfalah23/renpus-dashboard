@@ -44,3 +44,21 @@ export type categoryItem = {
   id: string;
   category: string;
 };
+
+export type bookItem = {
+  id: string;
+  author: string;
+  booked: number | null;
+  bookingId: string | null;
+  borrowId: string | null;
+  borrowed: number | null;
+  categoryId: string;
+  description: string;
+  image: string;
+  isbn: string;
+  publicationYear: Date;
+  publisher: string;
+  stock: number;
+  title: string;
+  Category: categoryItem;
+};

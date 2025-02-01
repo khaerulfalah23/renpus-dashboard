@@ -25,4 +25,12 @@ export const navItems: NavItem[] = [
     isActive: false,
     items: [],
   },
+  {
+    title: 'Book',
+    url: '/book',
+    icon: 'book',
+    shortcut: ['b', 'b'],
+    isActive: false,
+    items: [],
+  },
 ];

@@ -33,13 +33,13 @@ model Category {
 model Book {
   id              String   @id @default(cuid())
   image           String
-  title           String
+  title           String   @unique
   description     String
   author          String
   publisher       String
-  publicationYear String
+  publicationYear DateTime
   isbn            String
-  stock           Int
+  stock           Int      @default(1)
   booked          Int?     @default(0)
   borrowed        Int?     @default(0)
   categoryId      String

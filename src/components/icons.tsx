@@ -1,4 +1,5 @@
 import {
+  Book,
   Layers,
   LayoutDashboardIcon,
   LucideIcon,
@@ -12,6 +13,7 @@ export const Icons = {
   dashboard: LayoutDashboardIcon,
   user: User,
   category: Layers,
+  book: Book,
   logo: ({ ...props }: LucideProps) => (
     <svg
       {...props}
