@@ -8,17 +8,17 @@ import { useFetchCategories } from '@/features/category/useFetchCategories';
 import { categoryItem } from '@/types';
 
 export default function BookTableAction() {
-  // const { data: res, isPending } = useFetchCategories();
-  // const CATEGORY_OPTIONS =
-  //   (res?.data?.data as categoryItem[])?.map((categories: categoryItem) => ({
-  //     value: categories.category,
-  //     label: categories.category,
-  //   })) || [];
+  const { data: res } = useFetchCategories();
+  const CATEGORY_OPTIONS =
+    (res?.data?.data as categoryItem[])?.map((categories: categoryItem) => ({
+      value: categories.category,
+      label: categories.category,
+    })) || [];
   const {
-    // categoriesFilter,
-    // setCategoriesFilter,
-    // isAnyFilterActive,
-    // resetFilters,
+    categoriesFilter,
+    setCategoriesFilter,
+    isAnyFilterActive,
+    resetFilters,
     searchQuery,
     setPage,
     setSearchQuery,
@@ -31,17 +31,17 @@ export default function BookTableAction() {
         setSearchQuery={setSearchQuery}
         setPage={setPage}
       />
-      {/* <DataTableFilterBox
+      <DataTableFilterBox
         filterKey='categories'
         title='Categories'
         options={CATEGORY_OPTIONS}
         setFilterValue={setCategoriesFilter}
         filterValue={categoriesFilter}
-      /> */}
-      {/* <DataTableResetFilter
+      />
+      <DataTableResetFilter
         isFilterActive={isAnyFilterActive}
         onReset={resetFilters}
-      /> */}
+      />
     </div>
   );
 }
