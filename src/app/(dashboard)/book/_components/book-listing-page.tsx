@@ -8,7 +8,7 @@ export default async function BookListingPage() {
   const search = searchParamsCache.get('q');
   const pageLimit = searchParamsCache.get('limit');
   const category = searchParamsCache.get('category');
-  const categoryArray = category ? category.split('.') : [];
+  // const categoryArray = category ? category.split('.') : [];
 
   const whereClause = {
     ...(search && {
@@ -19,9 +19,9 @@ export default async function BookListingPage() {
         { isbn: { contains: search } },
       ],
     }),
-    ...(categoryArray.length > 0 && {
-      Category: { category: { in: categoryArray } },
-    }),
+    // ...(categoryArray.length > 0 && {
+    //   Category: { category: { in: categoryArray } },
+    // }),
   };
 
   const books = await prisma.book.findMany({
