@@ -32,7 +32,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
 import { CustomUpload } from '@/components/customUpload';
@@ -226,7 +225,7 @@ export default function BookForm({
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name='publicationYear'
               render={({ field }) => (
@@ -266,7 +265,7 @@ export default function BookForm({
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <Button disabled={isPendingCreate || isPendingUpdate} type='submit'>
               {isPendingCreate || isPendingUpdate ? (
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' />
