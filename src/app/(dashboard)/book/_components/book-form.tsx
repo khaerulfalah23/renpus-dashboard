@@ -14,7 +14,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { useCreateBook } from '@/features/book/useCreateBook';
 import { useFetchCategories } from '@/features/category/useFetchCategories';
-import { useUpdateCategory } from '@/features/category/useUpdateCategory';
 import { BookCredential, TBookCredential } from '@/lib/form-schema';
 import { bookItem, categoryItem } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -36,6 +35,7 @@ import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
 import { CustomUpload } from '@/components/customUpload';
 import { useUpdateBook } from '@/features/book/useUpdateBook';
+import { Calendar } from '@/components/ui/calendar';
 
 export default function BookForm({
   initialData,
@@ -225,7 +225,7 @@ export default function BookForm({
                 </FormItem>
               )}
             />
-            {/* <FormField
+            <FormField
               control={form.control}
               name='publicationYear'
               render={({ field }) => (
@@ -265,7 +265,7 @@ export default function BookForm({
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
+            />
             <Button disabled={isPendingCreate || isPendingUpdate} type='submit'>
               {isPendingCreate || isPendingUpdate ? (
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' />
